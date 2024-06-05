@@ -1,13 +1,24 @@
 import Foundation
 
-protocol PrintEmployeesDelegate {
-    func printEmployees()
+protocol PrintEmployeesDelegate: AnyObject {
+    //func recievedDataAndPassToController()
+    func view(_ data: Data)
 }
 
-struct OutputView {
-    var delegate: PrintEmployeesDelegate
+class OutputView {
+    weak var delegate: PrintEmployeesDelegate?
+
+    init(delegate: PrintEmployeesDelegate) {
+        self.delegate = delegate
+
+        printResults()
+    }
 
     func printResults() {
-        self.delegate.printEmployees()
+        let stdin = FileHandle.standardInput
+        let dataFromJson = stdin.availableData
+
+        self.delegate?.view(dataFromJson)
+        print(#function)
     }
 }
