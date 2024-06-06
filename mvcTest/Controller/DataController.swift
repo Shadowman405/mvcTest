@@ -10,21 +10,42 @@ public class DataController: PrintEmployeesDelegate {
 
         let persons = jsonParser.parseJSON(data: data)
 
-        if let persons {
-            let companies = companiesParser.personToCompany(persons: persons)
-            printCompaniesandEmployeesInIt(companies)
-        }
+        switch persons {
+        case .success(let persons):
+            if let persons {
+                let companies = companiesParser.personToCompany(persons: persons)
+                printCompaniesandEmployeesInIt(companies)
+            }
 
-        func printCompaniesandEmployeesInIt(_ companies: [Company]) {
-            for company in companies {
-                if let companyName = company.name {
-                    print("\n\(companyName.uppercased()):")
-                }
-                for employee in company.employees {
-                    print("\(employee.fullName ?? ""); \(company.team ?? "" ); \(employee.email ?? "")")
+            func printCompaniesandEmployeesInIt(_ companies: [Company]) {
+                for company in companies {
+                    if let companyName = company.name {
+                        print("\n\(companyName.uppercased()):")
+                    }
+                    for employee in company.employees {
+                        print("\(employee.fullName ?? ""); \(company.team ?? "" ); \(employee.email ?? "")")
+                    }
                 }
             }
+        case .failure(let error):
+            print(error.localizedDescription)
         }
+
+//        if let persons {
+//            let companies = companiesParser.personToCompany(persons: persons)
+//            printCompaniesandEmployeesInIt(companies)
+//        }
+//
+//        func printCompaniesandEmployeesInIt(_ companies: [Company]) {
+//            for company in companies {
+//                if let companyName = company.name {
+//                    print("\n\(companyName.uppercased()):")
+//                }
+//                for employee in company.employees {
+//                    print("\(employee.fullName ?? ""); \(company.team ?? "" ); \(employee.email ?? "")")
+//                }
+//            }
+//        }
     }
 
 

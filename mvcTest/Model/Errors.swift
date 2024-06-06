@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DataErrors {
+enum DataErrors: Error {
     case notAJSON
     case cantParseJSON
 }

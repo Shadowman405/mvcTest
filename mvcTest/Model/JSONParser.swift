@@ -3,12 +3,14 @@ import Foundation
 /// Singletone class that contains methods to parse JSON and converts result of parsing to structures
 class JSONParser {
 
-    func parseJSON(data: Data) -> [AllEmployees]? {
+    func parseJSON(data: Data) -> Result<[AllEmployees]?, DataErrors> {
         do {
-            return try JSONDecoder().decode([AllEmployees].self, from: data)
+            let data = try JSONDecoder().decode([AllEmployees].self, from: data)
+            return .success(data)
         } catch {
-            print(error.localizedDescription)
-            return nil
+            print(DataErrors.cantParseJSON.localizedDescription)
+            exit(1)
+            //return .failure(DataErrors.cantParseJSON)
         }
     }
 }
