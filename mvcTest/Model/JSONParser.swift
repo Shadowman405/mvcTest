@@ -10,7 +10,6 @@ class JSONParser {
         } catch {
             print(DataErrors.cantParseJSON.localizedDescription)
             exit(1)
-            //return .failure(DataErrors.cantParseJSON)
         }
     }
 }
